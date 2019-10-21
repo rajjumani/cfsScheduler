@@ -32,7 +32,7 @@
 Scheduler::Scheduler()
 {
     readyList = new List<Thread *>;
-    rbtree1 = new RBTree();
+    rbtree = new RedBlackTree();
     toBeDestroyed = NULL;
 }
 
@@ -43,7 +43,7 @@ Scheduler::Scheduler()
 
 Scheduler::~Scheduler()
 {
-    delete rbtree1;
+    delete rbtree;
     delete readyList;
 }
 
@@ -66,7 +66,7 @@ void Scheduler::ReadyToRun(Thread *thread)
     DEBUG(dbgThread, "Putting thread on ready list: " << thread->getName());
 
     thread->setStatus(READY);
-    rbtree1->insertValue(thread->totalTime, thread);
+    rbtree->insertValue(thread->totalTime, thread);
 }
 
 //----------------------------------------------------------------------
@@ -80,10 +80,10 @@ void Scheduler::ReadyToRun(Thread *thread)
 Thread *
 Scheduler::FindNextToRun()
 {
-    rbtree1->inorder();
+    rbtree->inorder();
     ASSERT(kernel->interrupt->getLevel() == IntOff);
 
-    Node *root = rbtree1->getRoot();
+    Node *root = rbtree->getRoot();
     while (root != NULL && root->left != NULL)
     {
         root = root->left;
@@ -92,7 +92,7 @@ Scheduler::FindNextToRun()
         return NULL;
     else
     {
-        rbtree1->deleteValue(root->data, root);
+        rbtree->deleteValue(root->data, root);
         return root->reqThread;
     }
 }

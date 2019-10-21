@@ -1,10 +1,7 @@
-//
-// Red Black Tree Definition
-//
 #include "thread.h"
 
-#ifndef RED_BLACK_TREE_RBTREE_H
-#define RED_BLACK_TREE_RBTREE_H
+#ifndef RedBlackTree_H
+#define RedBlackTree_H
 
 enum Color
 {
@@ -25,7 +22,7 @@ public:
     explicit Node(int);
 };
 
-class RBTree
+class RedBlackTree
 {
 private:
     Node *root;
@@ -33,29 +30,32 @@ private:
 protected:
     void rotateLeft(Node *&);
     void rotateRight(Node *&);
-    void fixInsertRBTree(Node *&);
-    void fixDeleteRBTree(Node *&);
+    void insertBalanceTree(Node *&);
+    void deleteBalanceTree(Node *&);
     void inorderBST(Node *&);
-    void preorderBST(Node *&);
     Node *minValueNode(Node *&);
     Node *insertBST(Node *&, Node *&);
     Node *deleteBST(Node *&, Node *&, int);
 
 public:
-    RBTree();
+    RedBlackTree();
     void insertValue(int, Thread *&);
     void deleteValue(int, Node *&);
-    void merge(RBTree);
     void inorder();
-    void preorder();
     void changeNodeColor(Node *&ptr, string pos);
     Node *getRoot();
-    void printTree();
-    void searchBST(string searchSide, Node *&root, Node *&ptr);
-    void rotate(string rotateNode, Node *&ptr, Node *&child, bool rotateFlag);
     void manageBST(Node *&root, bool leftFlag, Node *&ptr);
     void getLeftChild(Node *&left_child, Node *&ptr);
     void getRightChild(Node *&right_child, Node *&ptr);
+    void deleteNode(Node *&node, Node *&child);
+    void setSibParColor(Node *&sibling, Node *&parent);
+    void setParentColor(Node *&parent);
+    void setSiblingColor(Node *&sibling, Node *&parent);
+    void setSiblingColor1(Node *&sibling, Node *&parent);
+    void RLRotate(Node *&ptr, Node *&parent, Node *&grandparent);
+    void LRRotate(Node *&ptr, Node *&parent, Node *&grandparent);
+    void checkRotateRight(Node *&ptr, Node *&parent);
+    void checkRotateLeft(Node *&ptr, Node *&parent);
 };
 
-#endif //RED_BLACK_TREE_RBTREE_H
+#endif

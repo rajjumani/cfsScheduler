@@ -39,7 +39,7 @@ public:
 private:
   List<Thread *> *readyList; // queue of threads that are ready to run,
                              // but not running
-  RBTree *rbtree1;           // tree that contains threads that are ready to run,
+  RedBlackTree *rbtree;      // tree that contains threads that are ready to run,
                              // but not running
   Thread *toBeDestroyed;     // finishing thread to be destroyed
                              // by the next thread that runs
